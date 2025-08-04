@@ -1,7 +1,17 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import UserLayout from "./Components/layout/UserLayout";
+import Home from "./Pages/Home";
+
 const App = () => {
   return (
     <div>
-      <h2 className="text-2xl">Hi Developer Sifat How are you</h2>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<UserLayout />}>
+            <Route index element={<Home />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 };
