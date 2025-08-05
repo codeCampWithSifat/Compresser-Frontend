@@ -4,7 +4,7 @@ import TopNavbar from "./TopNavbar";
 const Navbar = () => {
   return (
     <div>
-      <TopNavbar />
+      {/* <TopNavbar /> */}
       <HeroNavbar />
     </div>
   );
