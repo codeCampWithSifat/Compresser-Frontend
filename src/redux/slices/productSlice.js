@@ -7,7 +7,54 @@ export const fetchBestSellerProducts = createAsyncThunk(
     const response = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/products/best-seller`
     );
-    console.log("fetchBestSeller Product", response.data);
+    return response.data;
+  }
+);
+
+export const fetchNewArrivalsProducts = createAsyncThunk(
+  "/products/fetchNewArrivalsProducts",
+  async () => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/products/new-arrivals`
+    );
+    return response.data;
+  }
+);
+
+export const fetchProductsByFilters = createAsyncThunk(
+  "products/fetchByFilters",
+  async ({
+    collection,
+    size,
+    color,
+    gender,
+    minPrice,
+    maxPrice,
+    sortBy,
+    search,
+    category,
+    material,
+    brand,
+    limit,
+  }) => {
+    const query = new URLSearchParams();
+    if (collection) query.append("collection", collection);
+    if (size) query.append("size", size);
+    if (color) query.append("color", color);
+    if (gender) query.append("gender", gender);
+    if (minPrice) query.append("minPrice", minPrice);
+    if (maxPrice) query.append("maxPrice", maxPrice);
+    if (sortBy) query.append("sortBy", sortBy);
+    if (search) query.append("search", search);
+    if (category) query.append("category", category);
+    if (material) query.append("material", material);
+    if (brand) query.append("brand", brand);
+    if (limit) query.append("limit", limit);
+
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/products?${query}`
+    );
+    // console.log("Product Slice Response", response);
     return response.data;
   }
 );
@@ -16,21 +63,52 @@ const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
+    bestSellerProducts: [],
+    newArrivalsProducts: [],
     error: null,
     loading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fecth Best Seller Product
       .addCase(fetchBestSellerProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchBestSellerProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.bestSellerProducts = action.payload;
       })
       .addCase(fetchBestSellerProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      // Fetch New Arrivals Product
+
+      .addCase(fetchNewArrivalsProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchNewArrivalsProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.newArrivalsProducts = action.payload;
+      })
+      .addCase(fetchNewArrivalsProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+
+      // Fetch Filter Products
+      .addCase(fetchProductsByFilters.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductsByFilters.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

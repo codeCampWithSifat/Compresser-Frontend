@@ -1,34 +1,38 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBestSellerProducts } from "../../redux/slices/productSlice";
+import { fetchProductsByFilters } from "../../redux/slices/productSlice";
 import { Link } from "react-router";
 
-const BestSeller = () => {
+const NewArrvalsForMen = () => {
   const dispatch = useDispatch();
-  const { bestSellerProducts, loading, error } = useSelector(
-    (state) => state.products
-  );
+  const { products, loading, error } = useSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(fetchBestSellerProducts());
+    dispatch(
+      fetchProductsByFilters({
+        gender: "Men",
+        category: "Top Wear",
+        limit: 4,
+      })
+    );
   }, [dispatch]);
 
   if (loading) {
-    return <p>Loading Products....</p>;
+    return <p>Loading...</p>;
   }
   if (error) {
-    return <p>Something Went Wrong : {error}</p>;
+    return <p>Something Went Wrong... {error}</p>;
   }
   return (
-    <section className="dark:bg-gray-600">
+    <section className="dark:bg-gray-600 -mt-10">
       <div className="max-w-6xl mx-auto  p-8 rounded-lg">
         <h2 className="text-3xl dark:text-white text-center font-bold mb-4 text-gray-800">
-          Best Seller Products
+          Top Category For Men
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-4 my-10">
-          {bestSellerProducts.length &&
-            bestSellerProducts.map((product) => (
+          {products.length &&
+            products.map((product) => (
               <Link
                 className="block"
                 key={product._id}
@@ -56,4 +60,4 @@ const BestSeller = () => {
   );
 };
 
-export default BestSeller;
+export default NewArrvalsForMen;
