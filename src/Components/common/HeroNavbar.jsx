@@ -4,11 +4,23 @@ import { HiBars3BottomRight } from "react-icons/hi2";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
 import DarkMode from "./DarkMode";
+import CartDrawer from "./CartDrawer";
+import { FaHeart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const HeroNavbar = () => {
   const [navbarDrawer, setNavbarDrawer] = useState(false);
+  const [cartDrawer, setCartDrawer] = useState(false);
+  const favouites = useSelector((state) => state.favourites);
+  const countFavourites = favouites && favouites.length;
 
-  const handleNavbarDrawer = () => [setNavbarDrawer(!navbarDrawer)];
+  const handleNavbarDrawer = () => {
+    setNavbarDrawer(!navbarDrawer);
+  };
+
+  const handleCartDrawer = () => {
+    setCartDrawer(!cartDrawer);
+  };
   return (
     <div className="bg-amber-100 dark:bg-gray-600 dark:text-white fixed top-0 left-0 w-full z-50 ">
       <nav className="container  mx-auto px-5 py-5 w-full flex flex-wrap justify-between items-center gap-y-4">
@@ -45,10 +57,18 @@ const HeroNavbar = () => {
             <HiOutlineUser className="h-6 w-6 text-gray-700 dark:text-white" />
           </Link>
           <div className="relative">
-            <button className="hover:text-black">
+            <button onClick={handleCartDrawer} className="hover:text-black">
               <HiOutlineShoppingBag className="h-6 w-6 text-gray-700 dark:text-white" />
-              <span className="absolute -top-2 -right-3 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
-                +9
+              <span className="absolute -top-2 -right-4 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
+                +20
+              </span>
+            </button>
+          </div>
+          <div className="relative">
+            <button className="hover:text-black ml-2">
+              <FaHeart className="h-6 w-6 text-gray-700 dark:text-white" />
+              <span className="absolute -top-2 -right-6 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
+                +{countFavourites}
               </span>
             </button>
           </div>
@@ -57,6 +77,8 @@ const HeroNavbar = () => {
           </button>
         </div>
       </nav>
+
+      <CartDrawer cartDrawer={cartDrawer} handleCartDrawer={handleCartDrawer} />
 
       {/* Mobile Navbar Navigation */}
 

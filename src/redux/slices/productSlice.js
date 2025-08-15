@@ -59,12 +59,23 @@ export const fetchProductsByFilters = createAsyncThunk(
   }
 );
 
+export const fetchProductDetails = createAsyncThunk(
+  "products/fetchProductDetails",
+  async (id) => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`
+    );
+    return response.data;
+  }
+);
+
 const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
     bestSellerProducts: [],
     newArrivalsProducts: [],
+    selectedProduct: null,
     error: null,
     loading: false,
   },
@@ -111,6 +122,19 @@ const productSlice = createSlice({
       .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
+      })
+      // Fetch Product Details
+      .addCase(fetchProductDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedProduct = action.payload;
+      })
+      .addCase(fetchProductDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
