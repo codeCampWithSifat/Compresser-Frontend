@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { fetchProductDetails } from "../../redux/slices/productSlice";
 import FavouriteWishList from "./FavouriteWishList";
+import { addToCart } from "../../redux/slices/cartSlice";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -39,6 +40,14 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     console.log("Button Clicked", id, selectedSize, selectedColor);
+    dispatch(
+      addToCart({
+        ...selectedProduct,
+        qty: 1, // default quantity
+        selectedSize,
+        selectedColor,
+      })
+    );
   };
 
   return (
