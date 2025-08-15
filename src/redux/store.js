@@ -10,9 +10,8 @@ export const store = configureStore({
     products: productReducer,
     favourites: favouriteReducer,
     carts: cartReducer,
-
-    preloadedState: {
-      favourites: initialFavourites,
-    },
+  },
+  preloadedState: {
+    favourites: initialFavourites,
   },
 });

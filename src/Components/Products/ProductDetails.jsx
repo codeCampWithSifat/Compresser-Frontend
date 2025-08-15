@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { fetchProductDetails } from "../../redux/slices/productSlice";
 import FavouriteWishList from "./FavouriteWishList";
-import { addToCart } from "../../redux/slices/cartSlice";
+import {
+  addToCart,
+  decrementQty,
+  incrementQty,
+} from "../../redux/slices/cartSlice";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -15,7 +19,8 @@ const ProductDetails = () => {
   const [mainImage, setMainImage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
-
+  const carts = useSelector((state) => state.carts);
+  const cartQuantity = carts.cartItems.reduce((acc, item) => acc + item.qty, 0);
   useEffect(() => {
     if (selectedProduct?.images?.length > 0) {
       setMainImage(selectedProduct.images[0].url);
@@ -42,12 +47,22 @@ const ProductDetails = () => {
     console.log("Button Clicked", id, selectedSize, selectedColor);
     dispatch(
       addToCart({
-        ...selectedProduct,
+        _id: selectedProduct._id,
+        price: selectedProduct.discountPrice,
+        imgUrl: selectedProduct.images[0].url,
         qty: 1, // default quantity
         selectedSize,
         selectedColor,
       })
     );
+  };
+
+  const incrementQuantity = () => {
+    dispatch(incrementQty(selectedProduct._id));
+  };
+
+  const decrementQuantity = () => {
+    dispatch(decrementQty(selectedProduct._id));
   };
 
   return (
@@ -151,9 +166,19 @@ const ProductDetails = () => {
               <div className="mb-6">
                 <p className="text-gray-700">Quantity :</p>
                 <div className="flex items-center space-x-4 mt-2">
-                  <button className="px-2 py-1 bg-gray-200">-</button>
-                  <span className="text-lg">{"Asi Tou"}</span>
-                  <button className="px-2 py-1 bg-gray-200">+</button>
+                  <button
+                    onClick={decrementQuantity}
+                    className="px-2 py-1 bg-gray-200"
+                  >
+                    -
+                  </button>
+                  <span className="text-lg">{cartQuantity}</span>
+                  <button
+                    onClick={incrementQuantity}
+                    className="px-2 py-1 bg-gray-200"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 

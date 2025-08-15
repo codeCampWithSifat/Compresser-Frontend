@@ -65,14 +65,16 @@ const HeroNavbar = () => {
             </button>
           </div>
           <div className="relative">
-            <button className="hover:text-black ml-2">
-              <FaHeart className="h-6 w-6 text-gray-700 dark:text-white" />
-              {favouites.length > 0 && (
-                <span className="absolute -top-2 -right-6 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
-                  +{countFavourites}
-                </span>
-              )}
-            </button>
+            <Link to="/wishList">
+              <button className="hover:text-black ml-2">
+                <FaHeart className="h-6 w-6 text-gray-700 dark:text-white" />
+                {favouites.length && (
+                  <span className="absolute -top-2 -right-6 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
+                    +{countFavourites}
+                  </span>
+                )}
+              </button>
+            </Link>
           </div>
           <button onClick={handleNavbarDrawer} className="md:hidden block ">
             <HiBars3BottomRight className="h-6 w-6 text-gray-700 dark:text-white" />
