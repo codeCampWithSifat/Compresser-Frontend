@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { fetchProductDetails } from "../../redux/slices/productSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
+import { toast } from "react-toastify";
 import FavouriteWishList from "./FavouriteWishList";
-import {
-  addToCart,
-  decrementQty,
-  incrementQty,
-} from "../../redux/slices/cartSlice";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -19,8 +16,6 @@ const ProductDetails = () => {
   const [mainImage, setMainImage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
-  const carts = useSelector((state) => state.carts);
-  const cartQuantity = carts.cartItems.reduce((acc, item) => acc + item.qty, 0);
   useEffect(() => {
     if (selectedProduct?.images?.length > 0) {
       setMainImage(selectedProduct.images[0].url);
@@ -44,25 +39,20 @@ const ProductDetails = () => {
   }
 
   const handleAddToCart = () => {
-    console.log("Button Clicked", id, selectedSize, selectedColor);
+    if (!selectedColor || !selectedSize) {
+      return toast.error(`Selected Your Size And Color `);
+    }
     dispatch(
       addToCart({
-        _id: selectedProduct._id,
-        price: selectedProduct.discountPrice,
-        imgUrl: selectedProduct.images[0].url,
-        qty: 1, // default quantity
-        selectedSize,
-        selectedColor,
+        _id: id,
+        name: selectedProduct.name,
+        image: selectedProduct.images[0].url,
+        price: selectedProduct.price,
+        color: selectedColor,
+        size: selectedSize,
+        qty: 1,
       })
     );
-  };
-
-  const incrementQuantity = () => {
-    dispatch(incrementQty(selectedProduct._id));
-  };
-
-  const decrementQuantity = () => {
-    dispatch(decrementQty(selectedProduct._id));
   };
 
   return (
@@ -106,9 +96,14 @@ const ProductDetails = () => {
             </div>
 
             <div className="md:1/2 md:ml-10 ">
-              <h1 className="text-2xl md:text-3xl font-semibold mb-2 mt-10">
-                {selectedProduct?.name}
-              </h1>
+              <div className="flex relative">
+                <h1 className="text-2xl md:text-3xl font-semibold mb-2 mt-10">
+                  {selectedProduct?.name}
+                </h1>
+                <div className="flex justify-end absolute top-9 left-100 ">
+                  <FavouriteWishList product={selectedProduct} />
+                </div>
+              </div>
               <p className="text-lg text-gray 600 mb-1 line-through">
                 {selectedProduct?.price && `${selectedProduct?.price}`}
               </p>
@@ -143,48 +138,25 @@ const ProductDetails = () => {
               <div className="mb-4 ">
                 <p className="text-gray-700">Size :</p>
                 <div className="flex gap-2 mt-2">
-                  {selectedProduct.sizes.length &&
-                    selectedProduct.sizes?.map((size) => (
-                      <button
-                        key={size}
-                        onClick={() => setSelectedSize(size)}
-                        className={`px-4 py-2 rounded border ${
-                          selectedSize === size
-                            ? "bg-black text-white"
-                            : "text-black"
-                        }`}
-                      >
-                        {size}
-                      </button>
-                    ))}
-                </div>
-                <div className="flex justify-end relative">
-                  <FavouriteWishList product={selectedProduct} />
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <p className="text-gray-700">Quantity :</p>
-                <div className="flex items-center space-x-4 mt-2">
-                  <button
-                    onClick={decrementQuantity}
-                    className="px-2 py-1 bg-gray-200"
-                  >
-                    -
-                  </button>
-                  <span className="text-lg">{cartQuantity}</span>
-                  <button
-                    onClick={incrementQuantity}
-                    className="px-2 py-1 bg-gray-200"
-                  >
-                    +
-                  </button>
+                  {selectedProduct.sizes?.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`px-4 py-2 rounded border ${
+                        selectedSize === size
+                          ? "bg-black text-white"
+                          : "text-black"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
                 </div>
               </div>
 
               <button
                 onClick={handleAddToCart}
-                className={`uppercase bg-black text-white py-2 px6 rounded w-full $`}
+                className={`uppercase mt-20 bg-black text-white py-2 px-6 rounded w-full $`}
               >
                 Add To Cart
               </button>

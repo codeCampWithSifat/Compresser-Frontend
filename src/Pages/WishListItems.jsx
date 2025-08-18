@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
+import FavouriteWishList from "../Components/Products/FavouriteWishList";
 
 const WishListItems = () => {
   const favouites = useSelector((state) => state.favourites);

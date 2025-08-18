@@ -14,6 +14,8 @@ const HeroNavbar = () => {
   const favouites = useSelector((state) => state.favourites);
   const countFavourites = favouites && favouites.length;
 
+  const carts = useSelector((state) => state.carts);
+
   const handleNavbarDrawer = () => {
     setNavbarDrawer(!navbarDrawer);
   };
@@ -60,22 +62,24 @@ const HeroNavbar = () => {
             <button onClick={handleCartDrawer} className="hover:text-black">
               <HiOutlineShoppingBag className="h-6 w-6 text-gray-700 dark:text-white" />
               <span className="absolute -top-2 -right-4 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
-                +20
+                +{carts?.cartItems?.length}
               </span>
             </button>
           </div>
-          <div className="relative">
-            <Link to="/wishList">
-              <button className="hover:text-black ml-2">
+
+          <Link to="/wishList" className="ml-2">
+            <div className="relative">
+              <button className="hover:text-black">
                 <FaHeart className="h-6 w-6 text-gray-700 dark:text-white" />
-                {favouites.length && (
-                  <span className="absolute -top-2 -right-6 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
+                {countFavourites && (
+                  <span className="absolute -top-2 -right-4 bg_rabbit_red text-black text-sm rounded-full px-2 py-0.5 dark:text-white">
                     +{countFavourites}
                   </span>
                 )}
               </button>
-            </Link>
-          </div>
+            </div>
+          </Link>
+
           <button onClick={handleNavbarDrawer} className="md:hidden block ">
             <HiBars3BottomRight className="h-6 w-6 text-gray-700 dark:text-white" />
           </button>
