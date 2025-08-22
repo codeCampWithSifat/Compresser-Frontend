@@ -21,7 +21,7 @@ const Footer = () => {
               {/* Newsletter */}
               <form className="flex flex-col mt-4">
                 <input
-                  className="p-3 w-full text-sm border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all"
+                  className="p-3 w-full text-sm border rounded-lg text-white border-gray-300 focus:outline-none focus:ring-2  focus:ring-gray-500 transition-all"
                   type="email"
                   placeholder="Enter Your Email"
                   required

@@ -4,6 +4,8 @@ import Home from "./Pages/Home";
 import ProductDetails from "./Components/Products/ProductDetails";
 import { ToastContainer } from "react-toastify";
 import WishListItems from "./Pages/WishListItems";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 
 const App = () => {
   return (
@@ -12,6 +14,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<UserLayout />}>
             <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
             <Route path="wishList" element={<WishListItems />} />
             <Route path="product/:id" element={<ProductDetails />} />
           </Route>
