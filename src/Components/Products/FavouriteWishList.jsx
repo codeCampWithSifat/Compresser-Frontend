@@ -36,7 +36,7 @@ const FavouriteWishList = ({ product }) => {
   };
   return (
     <div
-      className="absolute top-2 right-2 cursor-pointer z-10" // always position in top right
+      // className="absolute top-2 right-2 cursor-pointer z-10" // always position in top right
       onClick={toggleFavourite}
     >
       {isFavourite ? (

@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import WishListItems from "./Pages/WishListItems";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import CollectionPage from "./Pages/CollectionPage";
 
 const App = () => {
   return (
@@ -18,6 +19,10 @@ const App = () => {
             <Route path="register" element={<Register />} />
             <Route path="wishList" element={<WishListItems />} />
             <Route path="product/:id" element={<ProductDetails />} />
+            <Route
+              path="collections/:collection"
+              element={<CollectionPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

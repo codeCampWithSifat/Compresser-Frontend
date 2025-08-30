@@ -7,7 +7,7 @@ const Login = () => {
       <div className="max-w-7xl mx-auto  ">
         <div className="flex flex-col md:flex-row-reverse justify-center items-center">
           {/* Form Section */}
-          <div className="w-full md:w-1/2 p-4">
+          <div className="w-full md:w-1/2 p-6">
             <form>
               <h2 className="text-2xl mt-20 font-bold text-center mb-6 dark:text-white">
                 Hey There ! 🖐
@@ -53,7 +53,7 @@ const Login = () => {
                 type="submit"
                 className="w-full bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition p-2"
               >
-                Register
+                Login
               </button>
 
               <p className="mt-6 text-center text-sm dark:text-gray-300">
