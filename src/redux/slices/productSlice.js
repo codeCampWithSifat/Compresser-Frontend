@@ -78,8 +78,40 @@ const productSlice = createSlice({
     selectedProduct: null,
     error: null,
     loading: false,
+    filters: {
+      category: "",
+      size: "",
+      color: "",
+      gender: "",
+      brand: "",
+      minPrice: "",
+      maxPrice: "",
+      sortBy: "",
+      search: "",
+      material: "",
+      collection: "",
+    },
   },
-  reducers: {},
+  reducers: {
+    setFilters: (state, action) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
+    clearfilters: (state) => {
+      state.filters = {
+        category: "",
+        size: "",
+        color: "",
+        gender: "",
+        brand: "",
+        minPrice: "",
+        maxPrice: "",
+        sortBy: "",
+        search: "",
+        material: "",
+        collection: "",
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Fecth Best Seller Product
@@ -121,7 +153,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
+        state.error = action.error.message;
       })
       // Fetch Product Details
       .addCase(fetchProductDetails.pending, (state) => {
@@ -138,5 +170,5 @@ const productSlice = createSlice({
       });
   },
 });
-
+export const { setFilters, clearfilters } = productSlice.actions;
 export default productSlice.reducer;

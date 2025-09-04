@@ -66,14 +66,14 @@ const CartDrawer = ({ cartDrawer, handleCartDrawer }) => {
                 <div className="flex items-center mt-2.5 space-x-2">
                   <button
                     onClick={() => handleDecrementQuantity(item._id)}
-                    className="border rounded px-2 py-1 text-xl font-medium"
+                    className="border bg-black rounded px-1 py-.5 text-xl font-medium"
                   >
                     -
                   </button>
-                  <span>{item.qty}</span>
+                  <span className="text-black">{item.qty}</span>
                   <button
                     onClick={() => handleIncrementQuantity(item._id)}
-                    className="border rounded px-2 py-1 text-xl font-medium"
+                    className="border bg-black rounded px-1 py-.5 text-xl font-medium"
                   >
                     +
                   </button>

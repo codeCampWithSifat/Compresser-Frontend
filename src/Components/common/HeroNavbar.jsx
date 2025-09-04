@@ -36,25 +36,25 @@ const HeroNavbar = () => {
         {/* Center Navigation Links */}
         <div className="hidden md:flex space-x-4 flex-grow justify-center ">
           <Link
-            to="/collections/all"
+            to="/collections/all?gender=Men"
             className="text-gray-700 dark:text-white hover:text-black text-sm font-medium uppercase"
           >
             Men
           </Link>
           <Link
-            to="/collections/all"
+            to="/collections/all?gender=Women"
             className="text-gray-700 dark:text-white hover:text-black text-sm font-medium uppercase"
           >
             Women
           </Link>
           <Link
-            to="/collections/all"
+            to="/collections/all?category=Top Wear"
             className="text-gray-700 dark:text-white hover:text-black text-sm font-medium uppercase"
           >
             Top Wear
           </Link>
           <Link
-            to="/collections/all"
+            to="/collections/all?category=Bottom Wear"
             className="text-gray-700 dark:text-white hover:text-black text-sm font-medium uppercase"
           >
             Bottom Wear
