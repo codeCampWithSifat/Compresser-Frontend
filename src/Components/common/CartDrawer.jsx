@@ -33,7 +33,11 @@ const CartDrawer = ({ cartDrawer, handleCartDrawer }) => {
         </button>
       </div>
 
-      {carts.cartItems.length &&
+      {carts.cartItems.length === 0 ? (
+        <div className="min-h-screen flex items-center justify-center">
+          No Items Found
+        </div>
+      ) : (
         carts.cartItems.map((item) => (
           <div
             key={item._id}
@@ -66,23 +70,23 @@ const CartDrawer = ({ cartDrawer, handleCartDrawer }) => {
                 <div className="flex items-center mt-2.5 space-x-2">
                   <button
                     onClick={() => handleDecrementQuantity(item._id)}
-                    className="border bg-black rounded px-1 py-.5 text-xl font-medium"
+                    className="border bg-black text-white rounded px-1 py-.5 text-xl font-medium"
                   >
                     -
                   </button>
                   <span className="text-black">{item.qty}</span>
                   <button
                     onClick={() => handleIncrementQuantity(item._id)}
-                    className="border bg-black rounded px-1 py-.5 text-xl font-medium"
+                    className="border bg-black text-white rounded px-1 py-.5 text-xl font-medium"
                   >
                     +
                   </button>
                 </div>
               </div>
-              <div></div>
             </div>
           </div>
-        ))}
+        ))
+      )}
     </div>
   );
 };
